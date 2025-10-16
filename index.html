@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Total Sales</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    padding: 2em;
+    background-color: #f9f9f9;
+  }
+  h1 {
+    font-size: 2em;
+    margin-bottom: 1em;
+  }
+  #total {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #333;
+  }
+</style>
+</head>
+<body>
+<h1>Total Sales</h1>
+<div id="total">Loading...</div>
+<script>
+  const csvData = `Product,Sales
+Apple,150
+Banana,50
+Cherry,200`;
+
+  function parseCSV(data) {
+    const lines = data.trim().split(/\r?\n/);
+    const headers = lines[0].split(',');
+    const salesIndex = headers.indexOf('Sales');
+    let total = 0;
+    for (let i = 1; i < lines.length; i++) {
+      const cols = lines[i].split(',');
+      const saleStr = cols[salesIndex];
+      const saleNum = parseFloat(saleStr);
+      if (!isNaN(saleNum)) {
+        total += saleNum;
+      }
+    }
+    return total;
+  }
+
+  const totalSales = parseCSV(csvData);
+  document.getElementById('total').textContent = totalSales;
+</script>
+</body>
+</html>
